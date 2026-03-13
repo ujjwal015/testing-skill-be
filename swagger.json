@@ -1,0 +1,697 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "defaultTitle",
+    "description": "defaultDescription",
+    "version": "0.1"
+  },
+  "servers": [
+    {
+      "url": "https://testa-back-end.vercel.app"
+    },
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "paths": {
+    "/api/getAllSubadminProfile": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "parameters": [
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "5"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "parameters": [
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "5"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "organisationName": {
+                    "type": "string"
+                  },
+                  "acceptTermCondition": {
+                    "type": "boolean"
+                  },
+                  "mobile": {
+                    "type": "string"
+                  },
+                  "userType": {
+                    "type": "integer"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n \"firstName\":\"Maneeshs\", \r\n \"lastName\":\"kumar\", \r\n \"email\":\"maneesh@navankur.org\", \r\n \"password\":\"Maneesh123#\", \r\n \"userType\":4, \r\n \"mobile\":\"8864995639\", \r\n \"acceptTermCondition\":true, \r\n \"organisationName\":\"hindustan Aeronatics Limited\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/section-list": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/get-questionByQBankId": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "6437a2a67e5f98813d85e4fc"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/create-section": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nos": {
+                    "type": "string"
+                  },
+                  "performanceCriteria": {
+                    "type": "string"
+                  },
+                  "jobRole": {
+                    "type": "string"
+                  },
+                  "section": {
+                    "type": "string"
+                  },
+                  "language": {
+                    "type": "integer"
+                  },
+                  "isNext": {
+                    "type": "boolean"
+                  },
+                  "questionType": {
+                    "type": "string"
+                  },
+                  "question_bank_id": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n    \"questionType\": \"MCQ\",\r\n    \"jobRole\": \"student\",\r\n    \"section\": \"D\",\r\n    \"nos\": \"abc\",\r\n    \"performanceCriteria\":\"average\",\r\n    \"question_bank_id\": \"64393c0538f11c3108228714\",\r\n    \"language\": 1,\r\n    \"isNext\": true\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/registeruser": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "organisationName": {
+                    "type": "string"
+                  },
+                  "acceptTermCondition": {
+                    "type": "boolean"
+                  },
+                  "mobile": {
+                    "type": "string"
+                  },
+                  "userType": {
+                    "type": "integer"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n \"firstName\":\"Maneesh\", \r\n \"lastName\":\"kumar\", \r\n \"email\":\"maneesh@navankur.org\", \r\n \"password\":\"Maneesh123#\", \r\n \"userType\":4, \r\n \"mobile\":\"8864995639\", \r\n \"acceptTermCondition\":true, \r\n \"organisationName\":\"hindustan Aeronatics Limited\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/create-question": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "section_id": {
+                    "type": "string"
+                  },
+                  "questions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "questionMarks": {
+                          "type": "string"
+                        },
+                        "performanceCriteria": {
+                          "type": "string"
+                        },
+                        "options": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "optionId": {
+                                "type": "integer"
+                              },
+                              "title": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "diffculityLevel": {
+                          "type": "string"
+                        },
+                        "correctAnswer": {
+                          "type": "string"
+                        },
+                        "questionText": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "isNext": {
+                    "type": "boolean"
+                  },
+                  "question_bank_id": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n     \"section_id\":\"643e23f0e4818787565d0ef4\",\r\n     \"isNext\":true,\r\n     \"question_bank_id\":\"64393c0538f11c3108228714\",\r\n     \"questions\":[{\r\n         \"diffculityLevel\": \"medium\",\r\n    \"performanceCriteria\": \"average\",\r\n    \"questionMarks\": \"3\",\r\n          \"correctAnswer\":\"option 2\",\r\n          \"questionText\": \"How we can create question manually?\",\r\n    \"options\": [{\r\n        \"title\":\"option 1\",\r\n        \"optionId\":1\r\n\r\n\r\n    },\r\n    {\r\n        \"title\":\"option 2\",\r\n        \"optionId\":2\r\n\r\n\r\n    }]\r\n     }\r\n     ]\r\n    \r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "//localhost:5000/api/getAllSubadminProfile": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "parameters": [
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "5"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Auto generated using Swagger Inspector"
+          }
+        },
+        "servers": [
+          {
+            "url": "http://htttp"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://htttp"
+        }
+      ]
+    },
+    "/api/createQuestion": {
+      "post": {
+        "description": "Auto generated using Swagger Inspector",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "schemeCode": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "theoryMarks": {
+                    "type": "string"
+                  },
+                  "sectorCode": {
+                    "type": "string"
+                  },
+                  "schemeName": {
+                    "type": "string"
+                  },
+                  "subSector": {
+                    "type": "string"
+                  },
+                  "jobLevel": {
+                    "type": "string"
+                  },
+                  "practicalMarks": {
+                    "type": "string"
+                  },
+                  "nos": {
+                    "type": "string"
+                  },
+                  "nosCode": {
+                    "type": "string"
+                  },
+                  "jobRole": {
+                    "type": "string"
+                  },
+                  "questionType": {
+                    "type": "string"
+                  },
+                  "sector": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\r\n                \"questionType\":\"MCQ\", \r\n                \"jobRole\":\"employee\", \r\n                \"jobLevel\":\"third\", \r\n                \"code\":\"777\", \r\n                \"sector\":\"finance\", \r\n                \"subSector\":\"accounting\", \r\n                \"sectorCode\":\"12\", \r\n                \"schemeName\": \"Engg\",               \r\n                \"schemeCode\":\"pmky\", \r\n                \"nos\":\"disaster\", \r\n                \"nosCode\":\"dis-123\", \r\n                \"theoryMarks\":\"50\", \r\n                \"practicalMarks\":\"20\", \r\n                \"status\":\"active\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/question-list": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector"
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/questionbank-list": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/api/question-by-section": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "6437df276f9433599e629cdc"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    },
+    "/": {
+      "get": {
+        "description": "Auto generated using Swagger Inspector",
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:5000"
+          }
+        ]
+      },
+      "servers": [
+        {
+          "url": "http://localhost:5000"
+        }
+      ]
+    }
+  }
+}

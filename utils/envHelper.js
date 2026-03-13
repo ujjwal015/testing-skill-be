@@ -1,0 +1,39 @@
+require("dotenv").config()
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID
+const AWS_ACCESS_KEY_SECRET = process.env.AWS_ACCESS_KEY_SECRET
+const AWS_BUCKET_NAME = "testa-new"
+const AWS_REGION = "ap-south-1"
+const EMAIL_USERNAME = process.env.EMAIL_USERNAME
+const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD
+const EMAIL_SERVICE= process.env.EMAIL_SERVICE
+const EMAIL_CREATE_PASSWORD_USER=process.env.EMAIL_CREATE_PASSWORD_USER
+const TOKEN = process.env.TOKEN
+const SENDER_EMAIL = process.env.SENDER_EMAIL
+const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL
+const BASE_FRONTEND_URL = process.env.BASE_FRONTEND_URL
+const BASE_ASSESSOR_FRONTEND_URL = process.env.BASE_ASSESSOR_FRONTEND_URL
+const MSZ91_HOST = process.env.MSZ91_HOST
+const MSZ91_USER = process.env.MSZ91_USER
+const MSZ91_PASS = process.env.MSZ91_PASS
+const MSZ91_PORT = process.env.MSZ91_PORT
+
+
+module.exports = { 
+    AWS_ACCESS_KEY_ID,
+    AWS_ACCESS_KEY_SECRET,
+    AWS_BUCKET_NAME,
+    AWS_REGION,
+    EMAIL_USERNAME,
+    EMAIL_PASSWORD,
+    EMAIL_SERVICE,
+    EMAIL_CREATE_PASSWORD_USER,
+    TOKEN,
+    SENDER_EMAIL,
+    SUPER_ADMIN_EMAIL,
+    BASE_FRONTEND_URL,
+    BASE_ASSESSOR_FRONTEND_URL,
+    MSZ91_HOST,
+    MSZ91_USER,
+    MSZ91_PASS, 
+    MSZ91_PORT
+}

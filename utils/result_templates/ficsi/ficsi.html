@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Result Sheet</title>
+
+<style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:Arial, sans-serif;font-size:11px;}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;}
+    td,th{border:1px solid #000;padding:7px;word-wrap:break-word;}
+    .center{text-align:center;font-weight:bold;}
+</style>
+</head>
+
+<body>
+
+<div style="margin:20px;">
+
+<!-- ================= HEADER ================= -->
+<table>
+    <tr>
+        <td style="width:25%;border-right:none;">
+            <img src="data:image/png;base64,{{ficsiLogoBase64}}" style="height:45px;max-width:100%;object-fit:contain;">
+        </td>
+
+        <td style="border-top:1px solid #000;border-bottom:1px solid #000;border-left:none;border-right:none;text-align:center;font-size:26px;font-weight:700;">
+            Result Sheet
+        </td>
+
+        <td style="width:22%;border-left:none;text-align:right;padding-right:10px;">
+            <img src="data:image/svg+xml;base64,{{radiantBase64}}" style="height:45px;max-width:100%;object-fit:contain;">
+        </td>
+    </tr>
+</table>
+
+
+<!-- ================= DETAILS SECTION ================= -->
+<table style="margin-top:-1px;">
+    <tr>
+        <td class="center" style="width:25%;">TP Name</td>
+        <td style="width:25%;">{{trainingProvider}}</td>
+
+        <td class="center" style="width:25%;">TC Address</td>
+        <td style="width:25%;">{{examCentreName}} {{trainingProviderAddress}}</td>
+    </tr>
+
+    <tr>
+        <td class="center">Job Role</td>
+        <td>{{jobRole}}</td>
+
+        <td class="center">Batch ID</td>
+        <td>{{batchName}}</td>
+    </tr>
+
+    <tr>
+        <td class="center">Scheme</td>
+        <td>{{scheme}}</td>
+
+        <td class="center">State</td>
+        <td>{{trainingProviderState}}</td>
+    </tr>
+
+    <tr>
+        <td class="center">TP SPOC Name</td>
+        <td>{{spocName}}</td>
+
+        <td class="center">Date of Exam</td>
+        <td>{{batchStartDate}}</td>
+    </tr>
+
+    <tr>
+        <td class="center">TP SPOC Mobile</td>
+        <td>{{spocContact}}</td>
+
+        <td class="center">Assessor Name</td>
+        <td>{{accessorName}}</td>
+    </tr>
+</table>
+
+
+<!-- ================= BATCH SUMMARY  ================= -->
+<table style="margin-top:-1px;text-align:center;">
+    <tr>
+        <td class="center" style="width:10%;">Batch Size</td>
+        <td style="width:15%;">{{batchSize}}</td>
+
+        <td class="center" style="width:25%;">Present</td>
+        <td style="width:25%;"></td>
+
+        <td class="center" style="width:11%;">Absent</td>
+        <td style="width:14%;"></td>
+    </tr>
+</table>
+
+
+<!-- ================= STUDENT LIST  ================= -->
+<table style="margin-top:-1px;">
+    <tr class="center">
+        <th style="width:10%;">S.No</th>
+        <th style="width:15%;">Enrollment No</th>
+        <th style="width:25%;">Student Name</th>
+        <th style="width:25%;">Father Name</th>
+        <th style="width:11%;">Viva</th>
+        <th style="width:14%;">Practical</th>
+    </tr>
+
+    {{tableRows}}
+</table>
+<!-- ================= SIGNATURE SECTION ================= -->
+<table style="width:100%; border-collapse:collapse; margin-top:40px; border:none;">
+    <tr>
+        <td style="width:50%; text-align:center; font-weight:bold; border:none;">
+            VTP Stamp & Sign
+        </td>
+        <td style="width:50%; text-align:center; font-weight:bold; border:none;">
+            Assessor Sign
+        </td>
+    </tr>
+
+    <tr>
+        <td style="height:80px; border:none;"></td>
+        <td style="height:80px; border:none;"></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

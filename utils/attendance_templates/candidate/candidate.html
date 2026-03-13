@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Candidate Sheet</title>
+
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:Arial, sans-serif; font-size:11px; }
+
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    td, th { border:1px solid #000; padding:7px; word-wrap:break-word; }
+    .center { text-align:center; font-weight:bold; background:#f2f2f2; }
+
+    .watermark {
+        position: fixed;
+        top: 35%;
+        left: 25%;
+        opacity: 0.10;             
+        transform: rotate(-30deg);  
+        z-index: -1;                
+        pointer-events: none;       
+    }
+
+    .watermark img {width: 420px;  }
+</style>
+</head>
+
+<body>
+
+<div class="watermark">
+    <img src="data:image/svg+xml;base64,{{radiantBase64}}" />
+</div>
+
+<div style="margin:20px;">
+
+<!-- ================= HEADER ================= -->
+<table>
+    <tr>
+        <td style="width:25%; border-right:none;">
+            <img src="data:image/svg+xml;base64,{{radiantBase64}}" 
+                 style="height:45px; max-width:100%; object-fit:contain;">
+        </td>
+
+        <td style="border-top:1px solid #000; border-bottom:1px solid #000; 
+                   border-left:none; border-right:none; 
+                   text-align:center; font-size:26px; font-weight:700;">
+            Candidate Sheet
+        </td>
+
+        <td style="width:22%; border-left:none; text-align:right; padding-right:10px;">
+            <img src="data:image/svg+xml;base64,{{radiantBase64}}" 
+                 style="height:45px; max-width:100%; object-fit:contain;">
+        </td>
+    </tr>
+</table>
+
+<!-- ================= STUDENT LIST ================= -->
+<table style="margin-top:-1px;">
+    <tr class="center">
+        <th style="width:9%;">Sr.No.</th>
+        <th style="width:15%;">Candidate Name</th>
+        <th style="width:12%;">Username</th>
+        <th style="width:12%;">Password</th>
+        <th style="width:10%;">Mobile</th>
+        <th style="width:12%;">Candidate Id</th>
+        <th style="width:10%;">Batch Id</th>
+        <th style="width:12%;">Email</th>
+
+        {{linkHeader}}
+    </tr>
+
+    {{tableRows}}
+</table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Result Sheet</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+    }
+
+    table, th, td {
+        border: 1px solid #000 !important;
+        border-color: #000 !important;
+        box-sizing: border-box;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    th, td {
+        padding: 6px 4px;
+        font-size: 11px;
+    }
+
+    thead th {
+        background: #e7e6d8;
+        color: #1d2d5a;
+        font-weight: bold;
+    }
+
+    .col-small { width: 7%; }
+    .col-date { width: 15%; }
+    .col-id { width: 13%; }
+    .col-aadhar { width: 15%; line-height: 13px; padding: 5px; font-size: 10px; }
+    .col-name { width: 20%; }
+    .col-vacc { width: 10%; }
+    .col-sign { width: 20%; }
+
+    /* Person Concerned Table */
+    .pc-header {
+        background: #e2e2e2;
+        padding: 7px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .pc-row td {
+        padding: 9px;
+        height: 50px; 
+    }
+
+    .mt--1 { margin-top: -1px; }
+    .mt--2 { margin-top: -2px; }
+</style>
+</head>
+
+<body>
+
+<!-- MAIN TABLE -->
+<table class="mt--1">
+    <thead>
+        <tr style="height:30px;">
+            <th class="col-small">Sr.No.</th>
+            <th class="col-date">Assessment Date</th>
+            <th class="col-id">Candidate Id/Enroll NO.</th>
+            <th class="col-aadhar">
+                Aadhar Last 4 / ID Proof <br>
+                (Non PMKVY except PMAY-G) <br>
+                (J&K & NE Allowed)
+            </th>
+            <th class="col-name">Candidate Name</th>
+            <th class="col-vacc">Viva</th>
+            <th class="col-sign">Practical</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{tableRows}}
+    </tbody>
+</table>
+
+<!-- PERSON CONCERNED TABLE -->
+<table class="mt--2">
+    <tr>
+        <th class="pc-header" style="width:22%;">Person Concerned</th>
+        <th class="pc-header" style="width:13%;">ID</th>
+        <th class="pc-header" style="width:15%;">Name</th>
+        <th class="pc-header" style="width:30%;">Sign/Stamp</th>
+        <th class="pc-header">Phone</th>
+    </tr>
+
+    <tr class="pc-row">
+        <td class="pc-header">Certified Trainer</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="pc-row">
+        <td class="pc-header">Certified Assessor</td>
+        <td></td>
+        <td>{{accessorName}}</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="pc-row">
+        <td class="pc-header">TP Representative</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="pc-row">
+        <td class="pc-header">AA Coordinator</td>
+        <td></td>
+        <td>Sourabh Kumar</td>
+        <td></td>
+        <td style="text-align: center;">8929486915</td>
+    </tr>
+    
+</table>
+
+</body>
+</html>

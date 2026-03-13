@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>OMR Answer Sheet</title>
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+        <style>
+            :root{
+            --pink:#d65a8a;
+            --pink-light:#f7d6e3;
+            --border:#d65a8a;
+            --text:#5a0033;
+            }
+            *{box-sizing:border-box}
+            body{
+            margin:0;
+            font-family: Arial, Helvetica, sans-serif;
+            color:var(--text);
+            }
+            .page{
+            width:794px; /* A4 @ 96dpi */
+            min-height:1123px;
+            background:#fff;
+            padding:16px;
+            border:1px solid #ccc;
+            }
+            .outer{
+            border:1px solid var(--border);
+            padding:10px;
+            position: relative;
+            z-index: 1;
+            }
+            .row{display:flex;gap:10px}
+            .col{flex:1}
+            .center{text-align:center}
+            .title{
+            font-size:15px;
+            font-weight:700;
+            color:#c0005a;
+            margin-bottom:6px;
+            }
+            .subtitle{
+            font-size:12px;
+            font-weight:700;
+            border:1px solid var(--border);
+            padding:4px 6px;
+            display:inline-block;
+            background:var(--pink-light);
+            margin-bottom:8px;
+            }
+            .box{
+            border:1px solid var(--border);
+            padding:8px;
+            margin-bottom:8px;
+            }
+            .box h4{
+            margin:0 0 6px 0;
+            font-size:10px;
+            background:var(--pink-light);
+            padding:3px 5px;
+            border:1px solid var(--border);
+            display:inline-block;
+            }
+            .note{font-size:12px;line-height:1.4}
+            .grid{
+            display:grid;
+            grid-template-columns:repeat(10,1fr);
+            gap:4px;
+            margin-top:6px;
+            }
+            .bubble{
+            width:20px;height:20px;
+            border:1.5px solid var(--border);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:11px;
+            }
+            .digits{
+            display:flex;gap:4px;margin:6px 0
+            }
+            .digit{
+            width:28px;height:28px;
+            border:1.5px solid var(--border);
+            display:flex;align-items:center;justify-content:center;
+            font-weight:700
+            }
+            .instructions{font-size:12px;line-height:1.5}
+            .legend{
+            display:flex;gap:12px;flex-wrap:wrap;margin-top:6px
+            }
+            .legend .item{display:flex;align-items:center;gap:4px;font-size:11px}
+            .answers{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:10px;
+            margin-top:10px
+            }
+            .answers .colbox{
+            border:1px solid var(--border);
+            padding:6px
+            }
+            .q{
+            display:grid;
+            grid-template-columns:30px repeat(4,1fr);
+            gap:4px;
+            align-items:center;
+            font-size:11px;
+            margin-bottom:4px
+            }
+            .footer-sign{
+            display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px
+            }
+            .sign{
+            border-top:1px solid var(--border);
+            padding-top:4px;font-size:11px
+            }
+            .instruction-box{
+            border:1px solid var(--border);
+            padding:10px;
+            position:relative;
+            }
+            .pen-ribbon{
+            position:absolute;
+            top:-12px;
+            right:12px;
+            background:var(--pink-light);
+            border:1px solid var(--border);
+            padding:2px 8px;
+            font-size:11px;
+            font-weight:700;
+            }
+            .instruction-title{
+            font-size:14px;
+            font-weight:700;
+            text-align:center;
+            margin-bottom:6px;
+            }
+            .instruction-list{
+            font-size:12px;
+            line-height:1.45;
+            }
+            .instruction-list b{
+            font-weight:700;
+            }
+            .instruction-examples{
+            display:flex;
+            justify-content:space-between;
+            margin:6px 0;
+            }
+            .example{
+            text-align:center;
+            font-size:11px;
+            }
+            .example .bubble{
+            display:inline-flex;
+            }
+            .important-box{
+            border:1px solid var(--border);
+            padding:10px;
+            }
+            .important-header{
+            background:var(--pink-light);
+            border:1px solid var(--border);
+            padding:4px 8px;
+            font-weight:700;
+            font-size:13px;
+            display:inline-block;
+            margin-bottom:6px;
+            }
+            .important-text{
+            font-size:12px;
+            line-height:1.45;
+            }
+            .example-wrap{
+            border:1px solid var(--border);
+            padding:6px;
+            margin-top:8px;
+            }
+            .example-head{
+            background:var(--pink-light);
+            border:1px solid var(--border);
+            text-align:center;
+            font-size:13px;
+            font-weight:700;
+            padding:4px;
+            margin-bottom:6px;
+            }
+            .example-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:10px;
+            }
+            .example-card{
+            border:1.5px solid var(--border);
+            padding:6px;
+            text-align:center;
+            font-size:11px;
+            }
+            .example-card-title{
+            font-weight:700;
+            margin-bottom:4px;
+            }
+            .omr-digits{
+            display:flex;
+            justify-content:center;
+            gap:2px;
+            margin-bottom:4px;
+            }
+            .omr-digits .digit{
+            width:20px;
+            height:20px;
+            font-size:11px;
+            }
+            .omr-bubbles{
+            display:grid;
+            grid-template-columns:repeat(1,1fr);
+            row-gap:2px;
+            }
+            .omr-row{
+            display:grid;
+            grid-template-columns:repeat(10,1fr);
+            gap:2px;
+            }
+            .omr-row .bubble{
+            width:16px;
+            height:16px;
+            font-size:9px;
+            }
+            .omr-row .filled{
+            background:var(--border);
+            color:#fff;
+            }
+            .roll-example-box{
+            border:1px solid var(--border);
+            padding:6px;
+            width:100%;
+            }
+            .roll-example-title{
+            text-align:center;
+            font-size:12px;
+            font-weight:700;
+            margin-bottom:4px;
+            }
+            .roll-digits-row{
+            display:grid;
+            grid-template-columns:repeat(7, 1fr);
+            gap:4px;
+            margin-bottom:4px;
+            }
+            .roll-digits-row .digit{
+            width:22px;
+            height:22px;
+            line-height:22px;
+            text-align:center;
+            font-weight:700;
+            border:1.5px solid var(--border);
+            }
+            .roll-omr-grid{
+            display:grid;
+            grid-template-columns:repeat(7, 1fr);
+            gap:4px;
+            }
+            .roll-col{
+            display:grid;
+            grid-template-rows:repeat(10, 1fr);
+            gap:3px;
+            justify-items:center;
+            }
+            .roll-bubble{
+            width:16px;
+            height:16px;
+            border:1.5px solid var(--border);
+            border-radius:50%;
+            font-size:9px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            }
+            .roll-bubble.filled{
+            background:var(--border);
+            color:#fff;
+            }
+            .zigzag{
+            width:18px;
+            background:
+            repeating-linear-gradient(
+            45deg,
+            var(--border),
+            var(--border) 4px,
+            transparent 4px,
+            transparent 8px
+            );
+            }
+            .signature-box{
+            border:1px solid var(--border);
+            padding:8px;
+            display:flex;
+            gap:8px;
+            height: 60px;
+            }
+            .signature-content{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            }
+            .signature-text{
+            font-size:8px;
+            }
+            .signature-line{
+            display:flex;
+            justify-content:space-between;
+            margin-top:8px;
+            font-size:9px;
+            }
+            .stamp-box{
+            width:260px;
+            border-left:1.5px solid var(--border);
+            padding-left:8px;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            }
+            .stamp-title{
+            font-size:12px;
+            font-weight:700;
+            text-align:center;
+            }
+            .stamp-digits{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:6px;
+            }
+            .stamp-labels{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            font-size:11px;
+            text-align:center;
+            }
+            .watermark {
+            position: fixed;
+            top: 35%;
+            left: 25%;
+            opacity: 0.15;             
+            transform: rotate(-30deg);  
+            z-index: 0;                
+            pointer-events: none;       
+            }
+            .watermark img {width: 420px;  }
+            /* ===== CORNERS ===== */
+            .corner{position:absolute;width:14px;height:14px;background:#000}
+            .corner.tl{top:-1px;left:-1px}
+            .corner.tr{top:-1px;right:-1px}
+            .corner.bl{bottom:-1px;left:-1px}
+            .corner.br{bottom:-1px;right:-1px}
+            .micro-text{
+            position:absolute;
+            bottom:4px;
+            left:50%;
+            transform:translateX(-50%);
+            font-size:6px;
+            color:#999;
+            letter-spacing:1px;
+            }
+            /* ===== FORM SET ===== */
+            .form-code{
+            position:absolute;
+            top:10px;
+            right:10px;
+            border:1.5px solid var(--border);
+            padding:6px 8px;
+            background:#fff;
+            text-align:center;
+            font-size:11px;
+            z-index:5;
+            }
+            .form-code-title{font-weight:700;margin-bottom:4px}
+            .form-bubbles{display:flex;gap:6px;justify-content:center}
+            .form-bubbles .bubble{width:18px;height:18px;font-size:10px}
+        </style>
+    </head>
+    <body>
+        <div class="watermark">
+            <img src="data:image/svg+xml;base64,{{radiantBase64}}" />
+        </div>
+        <!-- PAGE 1 (SIDE-1) -->
+        <div class="page">
+            <div class="outer">
+                <div class="center">
+                    <div class="title">ओएमआर उत्तर पत्रिका / OMR ANSWER SHEET</div>
+                    <div class="subtitle">FILL IN THE FOLLOWING ENTRIES WITH BLUE/BLACK BALL POINT PEN ONLY</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="box">
+                            <h4>अनुक्रमांक / ROLL NUMBER</h4>
+                            <div class="digits">
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                                <div class="digit"></div>
+                            </div>
+                        </div>
+                        <div class="important-box">
+                            <div class="important-header">
+                                महत्वपूर्ण / IMPORTANT
+                            </div>
+                            <div class="important-text">
+                                परीक्षार्थी इस बात का ध्यान रखें कि प्रश्न पुस्तिका में छपा हुआ कोड और
+                                ओ.एम.आर. उत्तर पत्रिका के पृष्ठ–2 में छपा हुआ कोड एक समान हो।
+                                अगर ऐसा नहीं हो तो तुरंत निरीक्षक को सूचित करें और अपनी प्रश्न पुस्तिका
+                                एवं ओ.एम.आर. उत्तर पत्रिका बदलवाएँ।<br><br>
+                                The candidate should check carefully that the Test Booklet Code printed on
+                                Side-2 of the OMR Answer Sheet is the same as printed on the Test Booklet.
+                                In case of discrepancy, the candidate should immediately report the matter
+                                to the Invigilator for replacement of both the Test Booklet and the OMR
+                                Answer Sheet.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="instruction-box">
+                            <div class="pen-ribbon">USE BLUE OR BLACK BALL POINT PEN</div>
+                            <div class="instruction-title">
+                                पृष्ठ–2 पर उत्तर अंकित करने के लिए अनुदेश<br>
+                                INSTRUCTIONS FOR MARKING ON SIDE-2
+                            </div>
+                            <div class="instruction-list">
+                                <b>1.</b> केवल नीले / काले बॉल पेन से सही गोले को गहरा करें।<br>
+                                <b>Use Only Blue/Black Ball Point Pen to darken the appropriate circle.</b><br><br>
+                                <b>2.</b> कृपया गोले को पूरा गहरा भरें।<br>
+                                <b>Please darken the complete circle.</b><br><br>
+                                <b>3.</b> प्रत्येक प्रश्न का केवल एक सही उत्तर है। एक से अधिक गोले भरने पर उत्तर गलत माना जाएगा।<br>
+                                <b>There is only one correct answer for each question. Darken ONLY ONE circle.</b>
+                            </div>
+                            <div class="instruction-examples">
+                                <div class="example">
+                                    INCORRECT<br>
+                                    <div class="bubble">A</div>
+                                    <div class="bubble">B</div>
+                                </div>
+                                <div class="example">
+                                    INCORRECT<br>
+                                    <div class="bubble">A</div>
+                                    <div class="bubble">B</div>
+                                    <div class="bubble">C</div>
+                                </div>
+                                <div class="example">
+                                    CORRECT<br>
+                                    <div class="bubble">A</div>
+                                </div>
+                            </div>
+                            <div class="instruction-list">
+                                <b>4.</b> एक बार गोले में चिन्ह लगाने के बाद परिवर्तन मान्य नहीं है।<br>
+                                <b>No Change / Overwriting once marked is allowed.</b><br><br>
+                                <b>5.</b> ओएमआर शीट पर कोई भी अनावश्यक चिन्ह न बनाएं। ब्लेड / फ्लूइड का प्रयोग वर्जित है।<br>
+                                <b>Do not make any stray mark. Blade / fluid use is prohibited.</b><br><br>
+                                <b>6.</b> रफ कार्य ओएमआर उत्तर पत्रक पर न करें।<br>
+                                <b>Rough work must not be done on the OMR Answer Sheet.</b><br><br>
+                                <b>7.</b> प्रश्न संख्या के अनुसार केवल उसी स्थान पर उत्तर अंकित करें।<br>
+                                <b>Mark your answer only in the appropriate space against the question number.</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-wrap">
+                    <div class="example-head">
+                        उदाहरण:- पृष्ठ-2 को भरने की विधि (केवल नीले/काले बॉल पेन से भरें)<br>
+                        EXAMPLE - HOW TO FILL AND MARK ON SIDE-2 (WITH BLUE/BLACK BALL POINT PEN ONLY)
+                    </div>
+                    <div class="example-grid">
+                        <!-- ================= ROLL NO ================= -->
+                        <div class="example-card">
+                            अगर आपका अनुक्रमांक <b>1732172</b> है<br>
+                            <b>If your Roll Number is 1732172</b>
+                            <div class="example-card-title">
+                                अनुक्रमांक<br>Roll No.
+                            </div>
+                            <!-- DIGITS -->
+                            <div class="roll-digits-row">
+                                <div class="digit">1</div>
+                                <div class="digit">7</div>
+                                <div class="digit">3</div>
+                                <div class="digit">2</div>
+                                <div class="digit">1</div>
+                                <div class="digit">7</div>
+                                <div class="digit">2</div>
+                            </div>
+                            <!-- VERTICAL OMR COLUMNS -->
+                            <div class="roll-omr-grid">
+                                <!-- Column 1 (1 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble filled">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 2 (7 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble filled">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 3 (3 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble filled">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 4 (2 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble filled">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 5 (1 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble filled">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 6 (7 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble filled">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 7 (2 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble filled">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ================= TEST BOOKLET ================= -->
+                        <div class="example-card">
+                            अगर आपका प्रश्न पुस्तिका क्रमांक 0512467 है<br>
+                            <b>If your Test Booklet No. is 0512467</b>
+                            <div class="example-card-title">मुख्य प्रश्न पुस्तिका<br>Main Test Booklet No.</div>
+                            <!-- DIGITS -->
+                            <div class="roll-digits-row">
+                                <div class="digit">1</div>
+                                <div class="digit">7</div>
+                                <div class="digit">3</div>
+                                <div class="digit">2</div>
+                                <div class="digit">1</div>
+                                <div class="digit">7</div>
+                                <div class="digit">2</div>
+                            </div>
+                            <!-- VERTICAL OMR COLUMNS -->
+                            <div class="roll-omr-grid">
+                                <!-- Column 1 (1 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble filled">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 2 (7 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble filled">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 3 (3 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble filled">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 4 (2 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble filled">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 5 (1 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble filled">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 6 (7 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble filled">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 7 (2 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble filled">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ================= STATE BLOCK ================= -->
+                        <div class="example-card">
+                            अगर आपका राज्य 03, जिला 10, ब्लॉक 01, केन्द्र 01 है<br>
+                            <b>If your State is 03, Dist. 10, Block 01 & Centre 01</b>
+                            <div class="example-card-title">State | Distt. | Block | Centre</div>
+                            <!-- DIGITS -->
+                            <div class="roll-digits-row">
+                                <div class="digit">1</div>
+                                <div class="digit">7</div>
+                                <div class="digit">3</div>
+                                <div class="digit">2</div>
+                                <div class="digit">1</div>
+                                <div class="digit">7</div>
+                                <div class="digit">2</div>
+                            </div>
+                            <!-- VERTICAL OMR COLUMNS -->
+                            <div class="roll-omr-grid">
+                                <!-- Column 1 (1 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble filled">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 2 (7 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble filled">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 3 (3 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble filled">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 4 (2 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble filled">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 5 (1 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble filled">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 6 (7 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble filled">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                                <!-- Column 7 (2 selected) -->
+                                <div class="roll-col">
+                                    <div class="roll-bubble">0</div>
+                                    <div class="roll-bubble">1</div>
+                                    <div class="roll-bubble filled">2</div>
+                                    <div class="roll-bubble">3</div>
+                                    <div class="roll-bubble">4</div>
+                                    <div class="roll-bubble">5</div>
+                                    <div class="roll-bubble">6</div>
+                                    <div class="roll-bubble">7</div>
+                                    <div class="roll-bubble">8</div>
+                                    <div class="roll-bubble">9</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ================= RESPONSE ================= -->
+                        <div class="example-card">
+                            अगर प्रश्न संख्या 08 का उत्तर A है<br>
+                            <b>If your Response to Question number 08 is (A)</b>
+                            <div class="example-card-title">Q.No. &nbsp;&nbsp; Response</div>
+                            <div class="omr-digits">
+                                <div class="digit">0</div>
+                                <div class="digit">8</div>
+                            </div>
+                            <div style="display:flex;justify-content:center;gap:6px;margin-top:8px">
+                                <div class="bubble filled">A</div>
+                                <div class="bubble">B</div>
+                                <div class="bubble">C</div>
+                                <div class="bubble">D</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PAGE 2 (SIDE-2) -->
+        <div class="page">
+        <div class="form-code">
+            <div class="form-code-title">FORM / SET</div>
+            <div class="form-bubbles">
+                <div class="bubble">A</div>
+                <div class="bubble">B</div>
+                <div class="bubble">C</div>
+                <div class="bubble">D</div>
+            </div>
+        </div>
+        <div class="outer">
+            <!-- ===== PAGE-2 HEADER (LOGO + TITLE + LOGO) ===== -->
+                <div class="box" style="padding:6px 8px;margin-bottom:8px">
+                    <div class="row" style="align-items:center">
+
+                        <!-- LEFT LOGO -->
+                        <div class="col" style="flex:0 0 120px;text-align:left">
+                            <img src="data:image/svg+xml;base64,{{radiantBase64}}" style="height:45px;max-width:100%;object-fit:contain;">
+                        </div>
+
+                        <!-- CENTER TITLE -->
+                        <div class="col center title" style="font-size:16px;margin:0">
+                            OMR ANSWER SHEET
+                        </div>
+
+                        <!-- RIGHT LOGO -->
+                        <div class="col" style="flex:0 0 120px;text-align:right">
+                            <img src="data:image/svg+xml;base64,{{radiantBase64}}" style="height:45px;max-width:100%;object-fit:contain;">
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ===== END PAGE-2 HEADER ===== -->
+
+            <div class="row">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+
+                <!-- ================= LEFT 3/4 : DETAILS ================= -->
+                <div class="col" style="flex:3">
+                    <div class="box" style="height:180px; overflow:hidden">
+
+                        <div class="row" style="align-items:center;margin-bottom:6px">
+                            <div class="col" style="flex:1;font-weight:400">Roll No.</div>
+                            <div class="col" style="flex:2">
+                                <div style="border:1.5px solid var(--border);padding:6px;height:28px">
+                                    STD1234567
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="align-items:center;margin-bottom:6px">
+                            <div class="col" style="flex:1;font-weight:400">Candidate Name</div>
+                            <div class="col" style="flex:2">
+                                <div style="border:1.5px solid var(--border);padding:6px;height:28px">
+                                    AMIT SHAH
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="align-items:center;margin-bottom:6px">
+                            <div class="col" style="flex:1;font-weight:400">Centre ID</div>
+                            <div class="col" style="flex:2">
+                                <div style="border:1.5px solid var(--border);padding:6px;height:28px">
+                                    CENTER0001
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="align-items:center;margin-bottom:6px">
+                            <div class="col" style="flex:1;font-weight:400">Batch ID</div>
+                            <div class="col" style="flex:2">
+                                <div style="border:1.5px solid var(--border);padding:6px;height:28px">
+                                    BATCH20240901
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="align-items:center;margin-bottom:6px">
+                            <div class="col" style="flex:1;font-weight:400">Job Role</div>
+                            <div class="col" style="flex:2">
+                                <div style="border:1.5px solid var(--border);padding:6px;height:28px">
+                                    JOBROLE001
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ================= RIGHT 1/4 : BARCODE ================= -->
+                <div class="col" style="flex:1">
+                    <div class="box" style="
+                        height:180px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        overflow:hidden;
+                    ">
+                        <div style="
+                            display:flex;
+                            flex-direction:column;
+                            align-items:center;
+                            justify-content:center;
+                        ">
+
+                            <!-- Barcode Number (TOP) -->
+                            <div style="font-size:13px;font-weight:700;margin-bottom:8px;">
+                                20251217
+                            </div>
+
+                            <!-- Vertical Barcode -->
+                            <div>
+                                <svg id="centreBarcode"></svg>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <h4>ANSWERS</h4>
+                <div class="answers">
+
+                    <!-- Column 1 : 01–25 -->
+                    <div class="colbox">
+                        <script>
+                            for(let i = 1; i <= 25; i++){
+                                document.write(`
+                                    <div class="q">
+                                        <div>${String(i).padStart(2,'0')}</div>
+                                        <div class="bubble">A</div>
+                                        <div class="bubble">B</div>
+                                        <div class="bubble">C</div>
+                                        <div class="bubble">D</div>
+                                    </div>
+                                `);
+                            }
+                        </script>
+                    </div>
+
+                    <!-- Column 2 : 26–50 -->
+                    <div class="colbox">
+                        <script>
+                            for(let i = 26; i <= 50; i++){
+                                document.write(`
+                                    <div class="q">
+                                        <div>${i}</div>
+                                        <div class="bubble">A</div>
+                                        <div class="bubble">B</div>
+                                        <div class="bubble">C</div>
+                                        <div class="bubble">D</div>
+                                    </div>
+                                `);
+                            }
+                        </script>
+                    </div>
+
+                    <!-- Column 3 : 51–75 -->
+                    <div class="colbox">
+                        <script>
+                            for(let i = 51; i <= 75; i++){
+                                document.write(`
+                                    <div class="q">
+                                        <div>${i}</div>
+                                        <div class="bubble">A</div>
+                                        <div class="bubble">B</div>
+                                        <div class="bubble">C</div>
+                                        <div class="bubble">D</div>
+                                    </div>
+                                `);
+                            }
+                        </script>
+                    </div>
+
+                    <!-- Column 4 : 76–100 -->
+                    <div class="colbox">
+                        <script>
+                            for(let i = 76; i <= 100; i++){
+                                document.write(`
+                                    <div class="q">
+                                        <div>${i}</div>
+                                        <div class="bubble">A</div>
+                                        <div class="bubble">B</div>
+                                        <div class="bubble">C</div>
+                                        <div class="bubble">D</div>
+                                    </div>
+                                `);
+                            }
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================= SIGNATURE & STAMP – EXACT NAVODAYA ================= -->
+            <div class="signature-box" style=" height:120px;width:100%;display: flex;">
+                <div class="signature-content" style="width:100%">
+
+                    <div class="signature-text">
+                        ओ.एम.आर. उत्तर पत्रिका निरीक्षक को सौंपने से पहले परीक्षार्थी को यह
+                        जांच करनी चाहिए कि अनुक्रमांक एवं प्रश्न पुस्तिका क्रमांक सही रूप से
+                        भरे एवं चिन्हित किए गए हैं।<br><br>
+                        Before handing over the OMR Answer Sheet to the Invigilator, the candidate
+                        should check that Roll Number and Test Booklet Number are filled in and
+                        marked correctly.
+                    </div>
+
+                    <div class="signature-line" style="margin-top:18px">
+                        <span>Signature of Candidate in running hand</span>
+                        <span>Signature of Invigilator</span>
+                    </div>
+
+                </div>
+
+                <div class="micro-text">
+                    Unauthorized reproduction of this OMR Answer Sheet is prohibited
+                </div>
+            </div>
+
+        </div>
+        <script>
+            JsBarcode("#centreBarcode", "20221233", {
+                format: "CODE128",
+                width: 2,
+                height: 60,
+                displayValue: false,
+                margin: 0
+            });
+        </script>
+    </body>
+</html>
